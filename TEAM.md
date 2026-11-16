@@ -9,12 +9,12 @@
 
 ## Thành viên
 
-| STT | Họ tên       | MSSV         | Email                                                               | GitHub      | Vai trò  |
-| ---: | ------------ |--------------| ------------------------------------------------------------------- | ----------- | -------- |
-| 1   | Phạm Văn Nam | 2A202603681  | [nampham2662@gmail.com](mailto:nampham2662@gmail.com) (email commit) | NamPham1012 | Workflow |
-| 2   | Lê Nguyễn Hoàng Sơn | 2A202603686  | 26ai.sonlnh@vinuni.edu.vn | SonLNH19 | Single agent |
-| 3   | Hoàng Hải Nam | 2A202603694  | hoangnam26122003@gmail.com | hoangnam2612 | Orchestrator CP2 |
-| 4   | Phạm Thanh Tùng | Cần xác nhận | thanhtung23032003@gmail.com (email commit) | tunggthanhh | Orchestrator CP3 |
+| STT | Họ tên       | MSSV        | Email                                                                | GitHub      | Vai trò  |
+| ---: | ------------ | ----------- | -------------------------------------------------------------------- | ----------- | -------- |
+| 1   | Phạm Văn Nam | 2A202603681 | [nampham2662@gmail.com](mailto:nampham2662@gmail.com) (email commit) | NamPham1012 | Workflow |
+| 2   | Lê Nguyễn Hoàng Sơn | 2A202603686 | 26ai.sonlnh@vinuni.edu.vn | SonLNH19 | Single agent |
+| 3   | Hoàng Hải Nam | 2A202603694 | hoangnam26122003@gmail.com (email commit) | hoangnam2612 | Orchestrator CP2 |
+| 4   | Phạm Thanh Tùng | 2A202603695 | thanhtung23032003@gmail.com  | tunggthanhh | Orchestrator CP3 |
 
 Gợi ý chia vai:
 
@@ -29,8 +29,8 @@ Gợi ý chia vai:
 | --- | --- | --- | --- |
 | Phạm Văn Nam | Workflow | `d69e54f`, `dc55102` | Thêm `src/tests/test_workflow_run_id.py`; 63 test workflow pass |
 | Lê Nguyễn Hoàng Sơn | Single agent | `881f9cc`, `fc0cea7` | Thêm/sửa `src/tests/test_single_agent_review.py`; 62 test student riêng của single pass |
-| Hoàng Hải Nam | Orchestrator CP2 | `9c379e7` (code); commit test: điền hash sau khi commit | Thêm `src/tests/test_orchestrator_handoff_crash.py` (6 case); 62 test student orchestrator pass |
-| Phạm Thanh Tùng | Orchestrator CP3 | `6c2bf8d` | Chưa thấy test do thành viên thêm/sửa trong lịch sử hiện có; cần bổ sung bằng chứng |
+| Hoàng Hải Nam | Orchestrator CP2 | `9c379e7` | Chưa thấy test do thành viên thêm/sửa trong lịch sử hiện có; cần bổ sung bằng chứng |
+| Phạm Thanh Tùng | Orchestrator CP3 | `6c2bf8d` | Chưa có test cá nhân thêm/sửa; đã chạy bộ public orchestrator: 62 passed |
 
 ## Cá nhân
 
@@ -70,7 +70,7 @@ Mỗi thành viên bổ sung mục của mình và báo cáo riêng trong `repor
 - Báo cáo riêng: [2A202603686_LeNguyenHoangSon.md](report/team/2A202603686_LeNguyenHoangSon.md).
 - Bộ student hiện tại có 249/249 test pass; kết quả riêng của single ghi trong báo cáo cá nhân.
 
-### 2A202603694_HoangHaiNam
+### HoangHaiNam — cần xác nhận MSSV
 
 #### Phần việc phụ trách
 
@@ -78,16 +78,13 @@ Mỗi thành viên bổ sung mục của mình và báo cáo riêng trong `repor
 
 #### Đóng góp cụ thể
 
-- Commit triển khai `9c379e7`: khung `run_claim`, `_run` và các nhánh trạng thái.
-- Thêm `src/tests/test_orchestrator_handoff_crash.py`: handoff sạch và chỉ tool đọc, bỏ qua số ngày trong ticket, crash/resume giữ một refund, gọi lại không ghi trùng.
+- Commit triển khai `9c379e7` theo lịch sử Git. Chưa có bằng chứng test do cá nhân thêm/sửa.
 
 #### Bằng chứng
 
-- `python -m pytest -q -m student -o addopts= -k orchestrator`: 62 passed.
-- `python -m pytest -q`: 64 passed (cổng host).
-- Báo cáo riêng: [2A202603694_HoangHaiNam.md](report/team/2A202603694_HoangHaiNam.md).
+- Bộ student hiện tại có 249/249 test pass; cần bổ sung báo cáo cá nhân và test của thành viên.
 
-### PhamThanhTung — cần xác nhận MSSV
+### 2A202603695_PhamThanhTung
 
 #### Phần việc phụ trách
 
@@ -95,8 +92,10 @@ Mỗi thành viên bổ sung mục của mình và báo cáo riêng trong `repor
 
 #### Đóng góp cụ thể
 
-- Commit triển khai `6c2bf8d` theo lịch sử Git. Chưa có bằng chứng test do cá nhân thêm/sửa.
+- Commit triển khai `6c2bf8d`: tạo handoff đã sanitize, giới hạn investigator ở tool chỉ đọc, và truyền `crash_at` vào host refund.
 
 #### Bằng chứng
 
-- Bộ student hiện tại có 249/249 test pass; cần bổ sung báo cáo cá nhân và test của thành viên.
+- `python -m pytest -q -m student -o addopts= -k orchestrator`: 62 passed, 251 deselected.
+- Báo cáo riêng: [2A202603695_PhamThanhTung.md](report/team/2A202603695_PhamThanhTung.md).
+- Cần bổ sung một test do cá nhân thêm hoặc sửa trước khi nộp, theo yêu cầu submission.
