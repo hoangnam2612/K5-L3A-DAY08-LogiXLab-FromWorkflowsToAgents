@@ -18,6 +18,8 @@ ones. `lab8.trace.Trace` does this; your own tracer is fine if it matches.
 
 from __future__ import annotations
 
+import sqlite3
+
 from lab8.db import connect
 from lab8.durability import InjectedCrash, issue_refund
 from lab8.handoff import make_handoff
