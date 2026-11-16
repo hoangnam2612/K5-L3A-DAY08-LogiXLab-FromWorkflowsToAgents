@@ -29,7 +29,7 @@ Gợi ý chia vai:
 | --- | --- | --- | --- |
 | Phạm Văn Nam | Workflow | `d69e54f`, `dc55102` | Thêm `src/tests/test_workflow_run_id.py`; 63 test workflow pass |
 | Lê Nguyễn Hoàng Sơn | Single agent | `881f9cc`, `fc0cea7` | Thêm/sửa `src/tests/test_single_agent_review.py`; 62 test student riêng của single pass |
-| Hoàng Hải Nam | Orchestrator CP2 | `9c379e7` | Chưa thấy test do thành viên thêm/sửa trong lịch sử hiện có; cần bổ sung bằng chứng |
+| Hoàng Hải Nam | Orchestrator CP2 | `9c379e7` (code), `27b1959` (test, báo cáo) | Thêm `src/tests/test_orchestrator_handoff_crash.py` (6 case); 62 test student orchestrator pass |
 | Phạm Thanh Tùng | Orchestrator CP3 | `6c2bf8d` | Chưa có test cá nhân thêm/sửa; đã chạy bộ public orchestrator: 62 passed |
 
 ## Cá nhân
@@ -70,7 +70,7 @@ Mỗi thành viên bổ sung mục của mình và báo cáo riêng trong `repor
 - Báo cáo riêng: [2A202603686_LeNguyenHoangSon.md](report/team/2A202603686_LeNguyenHoangSon.md).
 - Bộ student hiện tại có 249/249 test pass; kết quả riêng của single ghi trong báo cáo cá nhân.
 
-### HoangHaiNam — cần xác nhận MSSV
+### 2A202603694_HoangHaiNam
 
 #### Phần việc phụ trách
 
@@ -78,11 +78,14 @@ Mỗi thành viên bổ sung mục của mình và báo cáo riêng trong `repor
 
 #### Đóng góp cụ thể
 
-- Commit triển khai `9c379e7` theo lịch sử Git. Chưa có bằng chứng test do cá nhân thêm/sửa.
+- Commit triển khai `9c379e7`: khung `run_claim`, `_run` và các nhánh trạng thái.
+- Commit `27b1959`: thêm `src/tests/test_orchestrator_handoff_crash.py` (handoff sạch và chỉ tool đọc, bỏ qua số ngày trong ticket, crash/resume giữ một refund, gọi lại không ghi trùng) và báo cáo cá nhân.
 
 #### Bằng chứng
 
-- Bộ student hiện tại có 249/249 test pass; cần bổ sung báo cáo cá nhân và test của thành viên.
+- `python -m pytest -q -m student -o addopts= -k orchestrator`: 62 passed.
+- `python -m pytest -q`: 64 passed (cổng host).
+- Báo cáo riêng: [2A202603694_HoangHaiNam.md](report/team/2A202603694_HoangHaiNam.md).
 
 ### 2A202603695_PhamThanhTung
 
