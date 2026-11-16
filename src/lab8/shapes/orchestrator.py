@@ -44,13 +44,28 @@ def run_claim(
 
 # ===== CP3 THAY HAI HÀM NÀY (giữ nguyên tên và chữ ký) =====
 def _investigate(conn, budget, trace, claim_id, claim) -> dict:
-    """Trả về dict results: {"lookup_order": ..., "lookup_policy": ..., "compute_compensation": ...}"""
-    raise NotImplementedError("CP3")
+      handoff = make_handoff(
+          request_id=f"REQ-{claim_id}",
+          claim_id=claim_id,
+          task="check_applicable_policy",
+          facts={},  # không đưa secret, raw header, claim row
+          allowed_tools=["lookup_order", "lookup_policy", "compute_compensation"],
+      )
+      trace.add("handoff", safe_dump(handoff))  # trace handoff đã sanitize
+
+      investigated = run_readonly_investigators(
+          conn, budget, handoff, principal_id=claim["principal_id"],
+      )
+      return investigated["tools"]
 
 
 def _call_host_refund(conn, trace, claim_id, proposal, crash_at) -> dict:
-    """Trả về outcome của issue_refund."""
-    return issue_refund(conn, claim_id, proposal)  # CP3 sẽ thêm crash_at
+      try:
+          return issue_refund(conn, claim_id, proposal, crash_at=crash_at)
+      except InjectedCrash:
+          trace.add("crash", {"at": crash_at})
+          trace.write()
+          raise
 
 
 # ===========================================================
