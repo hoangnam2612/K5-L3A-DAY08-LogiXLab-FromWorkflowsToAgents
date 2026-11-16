@@ -4,7 +4,7 @@
 `Shape chọn` phải là đúng một trong: `workflow`, `single`, `orchestrator`, `swarm`. Đây là shape được chấm cổng hidden.
 
 - Shape chọn: workflow
-- Commit hash: c8ea6aa (mã nền đã benchmark; cập nhật bằng commit chốt sau khi hoàn tất báo cáo)
+- Commit hash: 431c4dc (commit chứa code đã kiểm, benchmark, crash report và báo cáo nhóm; ADR được cập nhật ở commit kế tiếp)
 - Run id dẫn chứng: R-workflow-C-001-s11; đối chứng lỗi R-swarm-C-002-s55
 - Pass rate / pass^5 / seed min-max / variance: 1.000 / 1.000 / 1.000–1.000 / 0.000000 trên 14 claim × 5 seed; xem `src/reports/benchmark.json`
 - Cost per success (mô phỏng, VND): 27.86; xem `src/reports/benchmark.json`

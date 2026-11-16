@@ -6,7 +6,7 @@ Số liệu dưới đây đọc từ `src/reports/benchmark.json`, `src/reports
 
 - Tên nhóm: LogiXLab (theo tên repo; nhóm xác nhận tên chính thức trong `TEAM.md`)
 - Thành viên: xem `TEAM.md`
-- Commit chốt: xem `report/team/decision_adr.md` sau khi commit toàn bộ báo cáo và bằng chứng
+- Commit chốt cho code và bằng chứng: `431c4dc` (trùng `report/team/decision_adr.md`)
 
 ## 2. Mục tiêu và cách tiếp cận
 

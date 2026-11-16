@@ -5,7 +5,7 @@
 - Tên nhóm: LogiXLab (theo tên repo; nhóm xác nhận tên chính thức)
 - Lớp: L3A
 - Repo nhóm: [https://github.com/hoangnam2612/K5-L3A-DAY08-LogiXLab-FromWorkflowsToAgents](https://github.com/hoangnam2612/K5-L3A-DAY08-LogiXLab-FromWorkflowsToAgents)
-- URL repo, nhánh nộp, commit chốt: URL ở trên; nhánh `main`; commit chốt ghi trong `report/team/decision_adr.md` sau khi lưu bằng chứng và báo cáo.
+- URL repo, nhánh nộp, commit chốt: URL ở trên; nhánh `main`; commit code và bằng chứng `431c4dc` (xem `report/team/decision_adr.md`).
 
 ## Thành viên
 
@@ -50,7 +50,7 @@ Mỗi thành viên bổ sung mục của mình và báo cáo riêng trong `repor
 #### Bằng chứng
 
 - `python -m pytest -q -m student -o addopts= -k workflow`: 63 passed, 240 deselected.
-- `python -m pytest -q`: 54 passed, 249 deselected.
+- `python -m pytest -q`: 58 passed, 249 deselected trên nhánh `main` sau khi ghép các shape.
 - Test mới `src/tests/test_workflow_run_id.py` bắt lỗi `run_id` không theo seed; đã sửa `workflow.py` và chạy lại xanh.
 - Báo cáo riêng: [2A202603681_PhamVanNam.md](report/team/2A202603681_PhamVanNam.md).
 
