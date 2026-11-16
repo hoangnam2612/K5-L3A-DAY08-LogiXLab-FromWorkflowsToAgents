@@ -47,7 +47,7 @@ def run_claim(claim_id: str, *,seed: int,store_path: str,crash_at: str | None = 
     
 def _run(conn: sqlite3.Connection, claim_id ,* , seed, crash_at):
     budget = Budget()  #	Theo dõi chi phí xử lý
-    run_id = make_run_id("workflow", claim_id,crash_at) #	Mã nhận diện lần chạy theo quy ước của lab
+    run_id = make_run_id("workflow", claim_id, seed) #	Mã nhận diện lần chạy theo quy ước của lab
     trace = Trace(run_id) #Ghi lại các sự kiện để kiểm tra diễn biến
 
     # (1) Đọc claim qua VIEW allowlist, KHÔNG SELECT *.

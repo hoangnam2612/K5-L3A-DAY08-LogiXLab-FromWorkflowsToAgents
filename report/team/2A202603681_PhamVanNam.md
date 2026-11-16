@@ -4,8 +4,8 @@
 
 - Họ tên: Phạm Văn Nam
 - MSSV: 2A202603681
-- Email: [nampham2662@gmail.com](mailto:nampham2662@gmail.com) (
-- GitHub:NamPham1012 
+- Email: [nampham2662@gmail.com](mailto:nampham2662@gmail.com)
+- GitHub: NamPham1012
 
 ## 2. Phần việc phụ trách
 
@@ -18,20 +18,21 @@ Triển khai shape A `workflow` trong `src/lab8/shapes/workflow.py`. Đây là q
 - Tính quote bằng `compute_compensation` từ dữ liệu đơn, không lấy số ngày trễ trong ticket. Quote bằng 0 trả `denied`; quote dương được chuyển nguyên số tiền cho `durability.issue_refund` để host kiểm approval, trần theo đơn và idempotency.
 - Truyền `crash_at` vào host, để `InjectedCrash` tiếp tục nổi lên cho kịch bản crash/resume. Đóng kết nối SQLite trong `finally`.
 - Tạo `RunResult` và trace qua `finish`; trace ghi quyết định, trạng thái nhìn thấy đơn và quote, không ghi nguyên claim/order hoặc thông tin riêng tư.
-- Test đã thêm hoặc sửa: **chưa có trong commit `d69e54f`**. Cần bổ sung ít nhất một test có ý nghĩa trước khi chốt bài nhóm theo `SUBMISSION.md`.
+- Thêm `src/tests/test_workflow_run_id.py`: kiểm `run_id` và tên/nội dung trace phải khớp `seed`, đồng thời hai seed không dùng chung file trace. Test phát hiện workflow truyền nhầm `crash_at` vào `make_run_id`, làm cả seed 11 và 22 có hậu tố `sNone`; đã sửa thành truyền `seed`.
 
 ## 4. Bằng chứng
 
 - Commit: `d69e54f` trên nhánh `PHAMVANNAM`.
-- Từ thư mục `src/`, lệnh `python -m pytest -q -m student -o addopts= -k workflow` cho kết quả **62 passed, 240 deselected**. Bộ này gồm các claim public, gọi lại cùng claim (T11) và crash/resume (T12).
-- Lệnh `python -m pytest -q` cho kết quả **54 passed, 248 deselected** (cổng host). `python -m lab8.smoke` in `lab8.smoke pass`.
+- Từ thư mục `src/`, lệnh `python -m pytest -q -m student -o addopts= -k workflow` cho kết quả **63 passed, 240 deselected**. Bộ này gồm các claim public, gọi lại cùng claim (T11), crash/resume (T12) và test `run_id` mới.
+- Test mới ban đầu fail với `R-workflow-C-002-sNone` thay vì `R-workflow-C-002-s11`; sau khi sửa, test pass.
+- Lệnh `python -m pytest -q` cho kết quả **54 passed, 249 deselected** (cổng host). `python -m lab8.smoke` trước đó in `lab8.smoke pass`.
 - Môi trường lần kiểm tra trên máy: Windows AMD64, Python 3.14.7. Tài liệu lab ghi Python 3.11–3.13; cần chạy lại trên phiên bản được hỗ trợ trước khi chốt nếu có thể.
 - Run id và benchmark của cả nhóm: bổ sung từ `src/reports/benchmark.json` sau khi các shape còn lại hoàn thành.
 
 ## 5. Công cụ AI đã dùng
 
-Đã dùng ChatGPT/Codex để audit yêu cầu lab và hỗ trợ soạn báo cáo cá nhân. Kết quả code được tự kiểm bằng smoke, 62 test workflow và cổng host nêu ở mục 4; số liệu trong báo cáo lấy từ kết quả lệnh đã chạy, không tự tạo.
+Đã dùng ChatGPT/Codex để đối chiếu yêu cầu lab, hỗ trợ soạn báo cáo và viết test bổ sung cho `run_id`. Kết quả được kiểm bằng smoke, 63 test workflow và cổng host nêu ở mục 4; số liệu trong báo cáo lấy từ kết quả lệnh đã chạy, không tự tạo.
 
 ## 6. Tự đánh giá
 
-Đã triển khai workflow và qua toàn bộ test public riêng của shape này. Chưa thêm hoặc sửa test trong commit code và chưa có kết quả hidden; cần hoàn thành các bước đó cùng nhóm trước khi nộp.
+Đã triển khai workflow, thêm một test bắt được lỗi gắn sai `seed` vào `run_id`, và qua toàn bộ test public riêng của shape này. Chưa có kết quả hidden; nhóm cần kiểm tiếp trước khi nộp.

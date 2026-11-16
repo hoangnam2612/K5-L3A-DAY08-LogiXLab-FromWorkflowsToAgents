@@ -25,7 +25,7 @@ Gợi ý chia vai:
 
 | Người | Vai | Commit | Test đã thêm hoặc sửa |
 | --- | --- | --- | --- |
-| Phạm Văn Nam | Workflow | `d69e54f` | Đã chạy 62 test workflow trong `src/tests/test_public_matrix.py`; **chưa thêm/sửa test riêng**, cần bổ sung trước khi chốt bài |
+| Phạm Văn Nam | Workflow | `d69e54f` (triển khai ban đầu); commit bổ sung test và sửa `run_id` trên nhánh `PHAMVANNAM` | Thêm `src/tests/test_workflow_run_id.py`; 63 test workflow pass |
 
 ## Cá nhân
 
@@ -44,7 +44,7 @@ Mỗi thành viên bổ sung mục của mình và báo cáo riêng trong `repor
 
 #### Bằng chứng
 
-- `python -m pytest -q -m student -o addopts= -k workflow`: 62 passed, 240 deselected.
-- `python -m pytest -q`: 54 passed, 248 deselected.
+- `python -m pytest -q -m student -o addopts= -k workflow`: 63 passed, 240 deselected.
+- `python -m pytest -q`: 54 passed, 249 deselected.
+- Test mới `src/tests/test_workflow_run_id.py` bắt lỗi `run_id` không theo seed; đã sửa `workflow.py` và chạy lại xanh.
 - Báo cáo riêng: [2A202603681_PhamVanNam.md](report/team/2A202603681_PhamVanNam.md).
-- Chưa thêm hoặc sửa test riêng trong commit `d69e54f`; cần bổ sung trước khi chốt bài nhóm.
