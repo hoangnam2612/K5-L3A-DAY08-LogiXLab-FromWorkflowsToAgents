@@ -4,15 +4,15 @@
 
 - Tên nhóm:
 - Lớp: L3A
-- Repo nhóm: `K5-L3A-DAY08-TenNhom-FromWorkflowsToAgents` (xem [SUBMISSION.md](SUBMISSION.md))
+- Repo nhóm: [https://github.com/hoangnam2612/K5-L3A-DAY08-LogiXLab-FromWorkflowsToAgents](https://github.com/hoangnam2612/K5-L3A-DAY08-LogiXLab-FromWorkflowsToAgents)
 - URL repo, nhánh nộp, commit chốt:
 
 ## Thành viên
 
-| STT | Họ tên | MSSV | Email | GitHub | Vai trò |
-| --: | ------ | ---- | ----- | ------ | ------- |
-|   1 |        |      |       |        |         |
-|   2 |        |      |       |        |         |
+| STT | Họ tên       | MSSV        | Email                                                                | GitHub      | Vai trò  |
+| ---: | ------------ | ----------- | -------------------------------------------------------------------- | ----------- | -------- |
+| 1   | Phạm Văn Nam | 2A202603681 | [nampham2662@gmail.com](mailto:nampham2662@gmail.com) (email commit) | NamPham1012 | Workflow |
+| 2   |              |             |                                                                      |             |          |
 
 Gợi ý chia vai:
 
@@ -25,30 +25,26 @@ Gợi ý chia vai:
 
 | Người | Vai | Commit | Test đã thêm hoặc sửa |
 | --- | --- | --- | --- |
-| | | | |
+| Phạm Văn Nam | Workflow | `d69e54f` | Đã chạy 62 test workflow trong `src/tests/test_public_matrix.py`; **chưa thêm/sửa test riêng**, cần bổ sung trước khi chốt bài |
 
 ## Cá nhân
 
-Mỗi thành viên đồng thời tạo một báo cáo riêng trong `report/` theo dạng:
+Mỗi thành viên bổ sung mục của mình và báo cáo riêng trong `report/team/`.
 
-```text
-report/team/MSSV_HoTen.md
-```
+### 2A202603681_PhamVanNam
 
-Ví dụ: `report/team/20241234_NguyenVanAn.md`.
+#### Phần việc phụ trách
 
-Sao chép mục dưới đây cho từng thành viên.
+- Shape A `workflow` — `src/lab8/shapes/workflow.py`.
 
-## MSSV_HoTen
+#### Đóng góp cụ thể
 
-### Phần việc phụ trách
+- Triển khai quy trình xử lý claim, tính quote từ đơn hàng, gọi host để kiểm approval và ghi refund; xử lý retry, crash và trace.
+- Commit code: `d69e54f` trên nhánh `PHAMVANNAM`.
 
--
+#### Bằng chứng
 
-### Đóng góp cụ thể
-
--
-
-### Bằng chứng
-
--
+- `python -m pytest -q -m student -o addopts= -k workflow`: 62 passed, 240 deselected.
+- `python -m pytest -q`: 54 passed, 248 deselected.
+- Báo cáo riêng: [2A202603681_PhamVanNam.md](report/team/2A202603681_PhamVanNam.md).
+- Chưa thêm hoặc sửa test riêng trong commit `d69e54f`; cần bổ sung trước khi chốt bài nhóm.
