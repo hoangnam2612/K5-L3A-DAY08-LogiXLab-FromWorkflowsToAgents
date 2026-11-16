@@ -1,8 +1,4 @@
-# Báo cáo cá nhân — MSSV_HoTen
-
-Đổi tên file theo quy tắc `MSSV_HoTen.md`.
-
-Ví dụ: `20241234_NguyenVanAn.md`.
+# Báo cáo cá nhân — Lê Nguyễn Hoàng Sơn
 
 ## 1. Thông tin thành viên
 
@@ -13,31 +9,26 @@ Ví dụ: `20241234_NguyenVanAn.md`.
 
 ## 2. Phần việc phụ trách
 
-Phụ trách shape B — single agent, trong file `src/lab8/shapes/single.py`.
+Phụ trách viết và kiểm thử phần B — single agent trong `src/lab8/shapes/single.py`.
 
 ## 3. Đóng góp cụ thể
 
-Commit chính (hash), test đã thêm hoặc sửa, quyết định kỹ thuật bạn đưa ra.
-
-- Viết code phần B — single agent trong `src/lab8/shapes/single.py`.
-- Dùng vòng ReAct tối đa 8 bước, giới hạn tool đọc và gọi host ghi refund sau vòng lặp.
-- Truyền quote đầy đủ và `crash_at` vào `issue_refund`; để lỗi crash truyền ra ngoài.
-- Bổ sung test kiểm tra lời gọi MockLLM được tính vào chi phí và không dùng số ngày trễ khách ghi sai để quyết định hoàn tiền.
-- Commit chính: chưa tạo; bổ sung hash sau khi commit.
+- Viết `run_claim` để đọc claim, tra đơn hàng, tính số tiền hoàn và trả kết quả theo từng trường hợp.
+- Dùng `run_react` với giới hạn 8 bước. Mỗi lượt đưa thông tin vừa đọc vào lời gọi MockLLM; đầu ra của MockLLM được dùng để chọn trong các tool đọc hợp lệ.
+- Chỉ gọi `issue_refund` sau vòng ReAct, truyền quote đầy đủ và `crash_at` để host kiểm approval, trần hoàn tiền và chống ghi trùng.
+- Viết test kiểm tra claim không bị xử lý theo số ngày trễ khách tự khai, trace không lộ secret, và kết quả MockLLM có ảnh hưởng đến thứ tự chọn tool đọc.
+- Commit đã có: `881f9cc` (`Implement single agent claim handling`)..
 
 ## 4. Bằng chứng
 
-Link commit, tên test, run id hoặc trích đoạn report liên quan.
-
-- Test single agent: **62 passed**.
-- Test host trên repo nhóm: **55 passed**.
-- Test bổ sung: `tests/test_single_agent_review.py::test_single_uses_mock_without_trusting_ticket`.
+- Đã chạy bộ test public cho single agent: **62 passed**.
+- Đã chạy bộ test host sau lần chỉnh sửa gần nhất: **58 passed**.
+- Test bổ sung nằm trong `src/tests/test_single_agent_review.py`.
 
 ## 5. Công cụ AI đã dùng
 
-Công cụ, dùng vào việc gì, và bạn đã tự kiểm tra kết quả thế nào (xem [RULES.md](../../RULES.md)).
-
-Dùng Codex hỗ trợ rà soát, sửa code và bổ sung test. Tự chạy lại bộ test single agent, kết quả 62 passed.
+Dùng Codex để hỗ trợ rà soát code, chỉnh vòng ReAct và bổ sung test. Đã chạy lại test single agent; kết quả là 62 passed.
 
 ## 6. Tự đánh giá
 
+Phần single agent đã xử lý đúng các tình huống trong bộ test public và giữ việc ghi tiền ở host. MockLLM của lab chỉ trả digest, nên cách chọn tool hiện tại là mô phỏng có thể lặp lại theo seed; chưa đánh giá được khả năng chọn tool của một model thật. Cần tiếp tục kiểm tra khi ghép với các phần còn lại của nhóm.

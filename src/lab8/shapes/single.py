@@ -21,6 +21,7 @@ ones. `lab8.trace.Trace` does this; your own tracer is fine if it matches.
 from __future__ import annotations
 
 import sqlite3
+import json
 from typing import Any
 
 from lab8.db import connect
@@ -91,67 +92,63 @@ def _run(
             error_reason="missing_order_id",
         )
 
-    # MockLLM chi mo phong doc ticket; ket qua khong quyet dinh tien hay tool.
-    # MockLLM hien co khong cung cap giao dien tra ve lua chon tool.
-    complete(budget, seed=seed, purpose="parse", prompt=claim["ticket"])
-
-    # 3. Lưu trạng thái giữa các lượt gọi decide().
-    # Không lưu claim hoặc ticket vào trace.
-    stage: dict[str, Any] = {
-        "i": 0,
-        "order_view": None,
-    }
+    # MockLLM trả về digest thay vì tên tool. Ánh xạ đầu ra đó vào các
+    # lựa chọn đọc hợp lệ; trạng thái quan sát được đưa vào prompt mỗi lượt.
+    stage: dict[str, Any] = {"order_view": None, "policy_read": False}
 
     def decide(seen: dict[str, Any]) -> dict[str, Any]:
-        # Lượt đầu: yêu cầu đọc đơn hàng.
-        if stage["i"] == 0:
-            stage["i"] = 1
-            trace.add("action", {"tool": "lookup_order"})
-
-            return {
-                "tool": "lookup_order",
-                "args": {
-                    "order_id": claim["order_id"],
-                    "principal_id": claim["principal_id"],
-                },
-            }
-
-        # Lượt hai: nhận kết quả đọc đơn.
-        if stage["i"] == 1:
+        last_tool = seen.get("last_tool")
+        if last_tool == "lookup_order":
             order_view = seen["last_result"]
             stage["order_view"] = order_view
-
             trace.add(
                 "order",
-                {
-                    "visible": order_view["visible"],
-                    "reason": order_view.get("reason"),
-                },
+                {"visible": order_view["visible"], "reason": order_view.get("reason")},
             )
-
-            # Không xem được đơn: dừng vòng đọc.
             if not order_view["visible"]:
                 return {"final": {"order_view": order_view}}
+        elif last_tool == "lookup_policy":
+            stage["policy_read"] = True
+        elif last_tool == "compute_compensation":
+            quote = seen["last_result"]
+            trace.add("quote", quote)
+            return {"final": {"order_view": stage["order_view"], "quote": quote}}
 
-            # Xem được đơn: yêu cầu tính quote từ dữ liệu đơn.
-            stage["i"] = 2
-            trace.add("action", {"tool": "compute_compensation"})
+        choices = []
+        if stage["order_view"] is None:
+            choices.append("lookup_order")
+        if not stage["policy_read"]:
+            choices.append("lookup_policy")
+        if stage["order_view"] is not None:
+            choices.append("compute_compensation")
 
-            return {
-                "tool": "compute_compensation",
-                "args": {"order": order_view["order"]},
-            }
-
-        # Lượt ba: nhận quote và kết thúc vòng đọc.
-        quote = seen["last_result"]
-        trace.add("quote", quote)
-
-        return {
-            "final": {
-                "order_view": stage["order_view"],
-                "quote": quote,
-            }
+        observation = {
+            "last_tool": last_tool,
+            "order_visible": stage["order_view"] is not None,
+            "policy_read": stage["policy_read"],
+            "order_delay_days": (
+                stage["order_view"]["order"]["delay_days"]
+                if stage["order_view"] is not None else None
+            ),
+            "allowed_tools": choices,
         }
+        response = complete(
+            budget, seed=seed, purpose="react",
+            prompt=json.dumps(observation, sort_keys=True),
+        )
+        # Digest xác định lựa chọn để tái lập theo seed; fallback an toàn.
+        try:
+            choice = choices[int(response.rsplit(":", 1)[-1], 16) % len(choices)]
+        except ValueError:
+            choice = choices[0]
+        trace.add("action", {"tool": choice})
+        if choice == "lookup_order":
+            args = {"order_id": claim["order_id"], "principal_id": claim["principal_id"]}
+        elif choice == "compute_compensation":
+            args = {"order": stage["order_view"]["order"]}
+        else:
+            args = {}
+        return {"tool": choice, "args": args}
 
     # Runtime tự đếm chi phí tool qua dispatch().
     # worker=True giới hạn tool được chọn vào allowlist đọc.
