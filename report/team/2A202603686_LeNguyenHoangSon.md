@@ -25,7 +25,7 @@ Triển khai shape B `single` trong `src/lab8/shapes/single.py` và viết test 
 - Commit code trên nhánh `2A202603686_LeNguyenHoangSon`: `881f9cc` và `fc0cea7`.
 - Từ thư mục `src/`, lệnh `python -m pytest -q -m student -o addopts= -k "single and not workflow and not orchestrator and not swarm"` cho kết quả **62 passed, 244 deselected**. Bộ này gồm claim public, gọi lại cùng claim (T11) và crash/resume (T12).
 - Lệnh `python -m pytest -q` cho kết quả **58 passed, 248 deselected**. Chạy riêng `tests/test_single_agent_review.py` cho kết quả **4 passed**.
-- Chưa có kết quả hidden cho shape B; cần đối chiếu thêm khi nhóm chạy benchmark và chốt kiến trúc.
+- Benchmark public trong `src/reports/benchmark.json`: single đạt **70/70 trial**, pass rate **1,000**, pass^5 **1,000** và chi phí mô phỏng **36,32 VND/lần thành công**. Chưa có kết quả hidden cho shape B.
 
 ## 5. Công cụ AI đã dùng
 
@@ -33,4 +33,4 @@ Triển khai shape B `single` trong `src/lab8/shapes/single.py` và viết test 
 
 ## 6. Tự đánh giá
 
-Phần single agent đã qua toàn bộ test public riêng của shape và test bổ sung. MockLLM của lab chỉ trả digest, nên lựa chọn tool hiện là mô phỏng theo seed và kết quả quan sát, chưa phản ánh khả năng suy luận chọn tool của model thật. Nhóm cần kiểm tiếp trên benchmark và bộ hidden trước khi kết luận về kiến trúc.
+Phần single agent đã qua toàn bộ test public riêng của shape và test bổ sung. Benchmark public cũng cho thấy single đạt 70/70 trial, nhưng chi phí mô phỏng cao hơn workflow. MockLLM của lab chỉ trả digest, nên lựa chọn tool hiện là mô phỏng theo seed và kết quả quan sát, chưa phản ánh khả năng suy luận chọn tool của model thật. Kết quả hidden vẫn cần được giảng viên kiểm tra.
