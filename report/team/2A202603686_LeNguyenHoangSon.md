@@ -17,7 +17,7 @@ Phụ trách viết và kiểm thử phần B — single agent trong `src/lab8/s
 - Dùng `run_react` với giới hạn 8 bước. Mỗi lượt đưa thông tin vừa đọc vào lời gọi MockLLM; đầu ra của MockLLM được dùng để chọn trong các tool đọc hợp lệ.
 - Chỉ gọi `issue_refund` sau vòng ReAct, truyền quote đầy đủ và `crash_at` để host kiểm approval, trần hoàn tiền và chống ghi trùng.
 - Viết test kiểm tra claim không bị xử lý theo số ngày trễ khách tự khai, trace không lộ secret, và kết quả MockLLM có ảnh hưởng đến thứ tự chọn tool đọc.
-- Commit đã có: `881f9cc` (`Implement single agent claim handling`)..
+- Commit đã có: `fc0cea7`.
 
 ## 4. Bằng chứng
 
